@@ -48,7 +48,7 @@ public class BankAccountRepository {
         return jdbcTemplate.update(sql, accountNumber,
                                         customerId,
                                         accountType,
-                                        "0",
+                                        "inactive",
                                         0.0,
                                         formattedDate);
     }
@@ -73,7 +73,7 @@ public class BankAccountRepository {
     public String activeAccount(String accountNumber){
         String sql = """
                 UPDATE bank_account
-                SET account_status = '1'
+                SET account_status = 'active'
                 WHERE account_number = ?""";
         jdbcTemplate.update(sql, accountNumber );
         return "success";
