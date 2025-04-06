@@ -41,12 +41,22 @@ public class BankingAccountController {
         }
     }
 
-    @GetMapping("activeAccount")
+    @GetMapping("/activeAccount")
     public Response<Objects> activeAccount(@RequestParam String accountId){
         try {
             service.activeAccount(accountId);
             return new Response<>(200, Boolean.FALSE, 0, null, new ArrayList<>());
         } catch (Exception e) {
+            return new Response<>(404,Boolean.TRUE, e.hashCode(), e.getMessage(), null);
+        }
+    }
+
+    @GetMapping("/getAccountInfo")
+    public Response<BankAccount> getAccountInfo(@RequestParam(name = "accountId") String accountId){
+        try {
+            List<BankAccount> accounts = service.getAccountInfo(accountId);
+            return new Response<>(200, Boolean.FALSE, 0, null, new ArrayList<>(accounts));;
+        } catch (Exception e){
             return new Response<>(404,Boolean.TRUE, e.hashCode(), e.getMessage(), null);
         }
     }

@@ -79,4 +79,20 @@ public class BankAccountRepository {
         return "success";
     }
 
+    public List<BankAccount> getAccountInfo(String accountNumber){
+        String sql = """
+                SELECT *
+                FROM bank_account
+                WHERE account_number = ?
+                """;
+        return jdbcTemplate.query(sql , (rs,rowNum) -> new BankAccount(
+                        rs.getString("account_number"),
+                        rs.getString("customer_id"),
+                        rs.getString("account_type"),
+                        rs.getString("account_status"),
+                        rs.getDouble("balance"),
+                        rs.getString("last_update")),
+                accountNumber);
+    }
+
 }

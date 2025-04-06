@@ -41,6 +41,10 @@ public class BankAccountService {
         return "success";
     }
 
+    public List<BankAccount> getAccountInfo(String accountNumber){
+        return bankAccountRepository.getAccountInfo(accountNumber);
+    }
+
 
 
 
