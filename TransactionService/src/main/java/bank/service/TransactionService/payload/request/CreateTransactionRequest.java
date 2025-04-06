@@ -7,11 +7,22 @@ import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class CreateTransactionRequest {
     private String requestId;
 
     private String sessionId;
 
-    private Transaction transaction;
+    private Transaction transactionData;
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public Transaction getTransactionData() {
+        return transactionData;
+    }
 }

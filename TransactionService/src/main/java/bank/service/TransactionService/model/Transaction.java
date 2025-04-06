@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "bank_transaction")
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 public class Transaction {
     @Id
     @Column(name = "trans_id")
@@ -39,4 +38,36 @@ public class Transaction {
 
     @Column(name = "last_update")
     private String lastUpdate;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAccountId() {
+        return accountId;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public String getIct() {
+        return ict;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
 }

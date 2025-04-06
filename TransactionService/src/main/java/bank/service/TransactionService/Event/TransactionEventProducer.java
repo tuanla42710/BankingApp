@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TransactionEventProducer {
 
-    private final Transaction transaction;
+//    private final Transaction transaction;
 
 
 }

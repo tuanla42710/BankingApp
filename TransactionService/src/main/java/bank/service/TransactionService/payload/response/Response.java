@@ -8,7 +8,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+//@Getter
 public class Response<T> {
     private int statusCode;
 
@@ -20,4 +20,23 @@ public class Response<T> {
 
     private List<T> data;
 
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public Boolean getError() {
+        return error;
+    }
+
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
+    }
+
+    public List<T> getData() {
+        return data;
+    }
 }

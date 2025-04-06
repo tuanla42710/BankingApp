@@ -6,6 +6,7 @@ import bank.service.bankaccount.payload.request.CreateAccountRequest;
 import bank.service.bankaccount.payload.response.Response;
 import bank.service.bankaccount.service.BankAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,9 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@CrossOrigin(origins = "http://localhost:8080")
 @RestController
-@RequestMapping("/api/bankingAccount")
+@RequestMapping(value = "/api/bankingAccount",produces = MediaType.APPLICATION_JSON_VALUE)
 public class BankingAccountController {
 
     @Autowired
@@ -51,11 +51,11 @@ public class BankingAccountController {
         }
     }
 
-    @GetMapping("/getAccountInfo")
+    @GetMapping(value = "/getAccountInfo",produces = { MediaType.APPLICATION_JSON_VALUE })
     public Response<BankAccount> getAccountInfo(@RequestParam(name = "accountId") String accountId){
         try {
             List<BankAccount> accounts = service.getAccountInfo(accountId);
-            return new Response<>(200, Boolean.FALSE, 0, null, new ArrayList<>(accounts));;
+            return new Response<>(200, Boolean.FALSE, 0, null, new ArrayList<>(accounts));
         } catch (Exception e){
             return new Response<>(404,Boolean.TRUE, e.hashCode(), e.getMessage(), null);
         }
