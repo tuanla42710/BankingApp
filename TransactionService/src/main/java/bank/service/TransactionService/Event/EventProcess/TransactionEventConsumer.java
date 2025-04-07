@@ -2,6 +2,7 @@ package bank.service.TransactionService.Event.EventProcess;
 
 
 import bank.service.TransactionService.Event.TransactionEvent;
+import bank.service.TransactionService.Event.TransactionStatus;
 import bank.service.TransactionService.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -15,6 +16,9 @@ public class TransactionEventConsumer {
 
     @KafkaListener(topics = "transaction")
     public void handleTransactionRequest(TransactionEvent event){
-        service.handleTransactionProcess(event);
+        if (event.getTransactionStatus() == TransactionStatus.PROCESSING){
+            service.handleTransactionProcess(event);
+        }
+
     }
 }

@@ -11,7 +11,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class UpdateRequest<T> {
+
     private String requestId;
+
     private String sessionId;
 
     private List<T> data;

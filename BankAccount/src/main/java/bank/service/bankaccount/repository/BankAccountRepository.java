@@ -3,11 +3,9 @@ package bank.service.bankaccount.repository;
 import bank.service.bankaccount.model.BankAccount;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -33,7 +31,7 @@ public class BankAccountRepository {
                 customerId);
     }
 
-    public int createNewAccount(String customerId, String accountType){
+    public void createNewAccount(String customerId, String accountType){
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         String formattedDate = date.format(formatter);
@@ -45,12 +43,12 @@ public class BankAccountRepository {
                 INSERT INTO bank_account
                 VALUES (?,?,?,?,?,?)
                 """;
-        return jdbcTemplate.update(sql, accountNumber,
-                                        customerId,
-                                        accountType,
-                                        "inactive",
-                                        0.0,
-                                        formattedDate);
+        jdbcTemplate.update(sql, accountNumber,
+                customerId,
+                accountType,
+                "inactive",
+                0.0,
+                formattedDate);
     }
 
     public List<BankAccount> findAccount(String accountNumber){
@@ -70,13 +68,12 @@ public class BankAccountRepository {
         );
     }
 
-    public String activeAccount(String accountNumber){
+    public void activeAccount(String accountNumber){
         String sql = """
                 UPDATE bank_account
                 SET account_status = 'active'
                 WHERE account_number = ?""";
         jdbcTemplate.update(sql, accountNumber );
-        return "success";
     }
 
     public List<BankAccount> getAccountInfo(String accountNumber){
@@ -93,6 +90,29 @@ public class BankAccountRepository {
                         rs.getDouble("balance"),
                         rs.getString("last_update")),
                 accountNumber);
+    }
+
+    public void updateBalance(String accountId, double amount, String ict , String ofsAccount){
+        List<BankAccount> bankAccounts = getAccountInfo(accountId);
+        List<BankAccount> accounts = getAccountInfo(ofsAccount);
+        double newBal = bankAccounts.get(0).getBalance();
+        double ofsBal = accounts.get(0).getBalance();
+
+        if (ict.equals("0")){
+            newBal -= amount;
+            ofsBal += amount;
+        } else {
+            newBal += amount;
+            ofsBal -= amount;
+        }
+
+        String sql = """
+                UPDATE bank_account
+                SET balance = ?
+                WHERE account_number = ?;""";
+
+        jdbcTemplate.update(sql , newBal, accountId);
+        jdbcTemplate.update(sql, ofsBal, ofsAccount);
     }
 
 }

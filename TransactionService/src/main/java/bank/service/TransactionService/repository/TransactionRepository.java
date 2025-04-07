@@ -19,9 +19,9 @@ public class TransactionRepository {
 
     public void saveTransaction(TransactionEvent event){
         String sql = """
-                INSERT INTO bank_transaction (account_number, customer_id, amount, trx_context, ict, category, last_update)
+                INSERT INTO bank_transaction (account_number, customer_id, amount, trx_context, ict, ofs_account, ofs_customer, category, last_update)
                 VALUES
-                (?, ?, ?, ?, ?, ?, ?)""";
+                (?, ?, ?, ?, ?, ?, ?, ?, ?)""";
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = date.format(formatter);
@@ -32,6 +32,19 @@ public class TransactionRepository {
                 event.getAmount(),
                 event.getContent(),
                 event.getIct(),
+                event.getOfsAccount(),
+                event.getOfsCustomer(),
+                event.getCategory(),
+                formattedDate);
+
+        jdbcTemplate.update(sql,
+                event.getOfsAccount(),
+                event.getOfsCustomer(),
+                event.getAmount(),
+                event.getContent(),
+                "1",
+                event.getAccountId(),
+                event.getCustomerId(),
                 event.getCategory(),
                 formattedDate);
     }

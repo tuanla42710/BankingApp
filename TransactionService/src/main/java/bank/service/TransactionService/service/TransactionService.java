@@ -2,6 +2,7 @@ package bank.service.TransactionService.service;
 
 import bank.service.TransactionService.APIConnection.HttpApiCall;
 import bank.service.TransactionService.Event.TransactionEvent;
+import bank.service.TransactionService.Event.TransactionStatus;
 import bank.service.TransactionService.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
@@ -69,27 +70,18 @@ public class TransactionService {
                     null);
         }
 
-        TransactionEvent eventDebit = new TransactionEvent(request.getTransactionData().getAccountId(),
+        TransactionEvent event = new TransactionEvent(request.getTransactionData().getAccountId(),
                                                       request.getTransactionData().getCustomerId(),
                                                       request.getTransactionData().getAmount(),
                                                       request.getTransactionData().getContent(),
                                                       request.getTransactionData().getIct(),
                                                       request.getTransactionData().getOfsAccount(),
-                                                      request.getTransactionData().getCategory());
+                                                      request.getTransactionData().getOfsCustomer(),
+                                                      request.getTransactionData().getCategory(),
+                                                      TransactionStatus.PENDING);
 
-        kafkaTemplate.send("transaction",eventDebit);
+        kafkaTemplate.send("transaction",event);
 
-        TransactionEvent eventCredit = new TransactionEvent(request.getTransactionData().getOfsAccount(),
-                request.getTransactionData().getCustomerId(),
-                request.getTransactionData().getAmount(),
-                request.getTransactionData().getContent(),
-                "1",
-                request.getTransactionData().getAccountId(),
-                request.getTransactionData().getCategory());
-
-        kafkaTemplate.send("transaction",eventCredit);
-//
-//        System.out.println("hi");
 
         return new Response<BankAccount>(200,
                 false,

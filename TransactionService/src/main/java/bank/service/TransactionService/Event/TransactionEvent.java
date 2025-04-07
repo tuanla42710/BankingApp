@@ -7,41 +7,41 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 
-@Getter
 public class TransactionEvent {
 
     private String accountId;
 
     private String customerId;
 
-
     private double amount;
 
-
     private String content;
-
 
     private String ict;
 
     private String ofsAccount;
 
+    private String ofsCustomer;
 
     private String category;
 
-    public TransactionEvent(String accountId, String customerId, double amount, String content, String ict, String ofsAccount, String category) {
+    private TransactionStatus transactionStatus;
+
+    public TransactionEvent(String accountId, String customerId, double amount, String content, String ict, String ofsAccount, String ofsCustomer, String category, TransactionStatus transactionStatus) {
         this.accountId = accountId;
         this.customerId = customerId;
         this.amount = amount;
         this.content = content;
         this.ict = ict;
         this.ofsAccount = ofsAccount;
+        this.ofsCustomer = ofsCustomer;
         this.category = category;
+        this.transactionStatus = transactionStatus;
     }
 
     public TransactionEvent() {
 
     }
-
 
     public String getAccountId() {
         return accountId;
@@ -67,7 +67,15 @@ public class TransactionEvent {
         return ofsAccount;
     }
 
+    public String getOfsCustomer() {
+        return ofsCustomer;
+    }
+
     public String getCategory() {
         return category;
+    }
+
+    public TransactionStatus getTransactionStatus() {
+        return transactionStatus;
     }
 }
