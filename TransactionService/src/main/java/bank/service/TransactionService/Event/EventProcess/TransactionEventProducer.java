@@ -1,7 +1,6 @@
-package bank.service.TransactionService.Event;
+package bank.service.TransactionService.Event.EventProcess;
 
 
-import bank.service.TransactionService.model.Transaction;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

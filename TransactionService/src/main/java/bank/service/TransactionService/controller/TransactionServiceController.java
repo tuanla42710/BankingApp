@@ -17,16 +17,20 @@ public class TransactionServiceController {
     @Autowired
     TransactionService service;
 
-    @GetMapping("/createTransaction")
-    public Response<BankAccount> createNewTransaction(@RequestParam(name = "accountId") String accountId) {
+    @PostMapping("/createTransaction")
+    public Response<BankAccount> createNewTransaction(@RequestBody CreateTransactionRequest request) {
         try {
-            return service.addNewTransaction(accountId);
+            return service.addNewTransaction(request);
         } catch (Exception e) {
             // Properly specify the generic type parameter
             System.out.println(e.getMessage());
             System.out.println(e.toString());
-            e.printStackTrace();
-            return new Response<BankAccount>();
+            return new Response<BankAccount>(
+                    404,
+                    true,
+                    0 ,
+                    null,
+                    null);
 
         }
     }

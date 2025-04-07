@@ -17,7 +17,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConfig {
 
-    public static final String TOPIC = "Notify";
+    public static final String TOPIC = "transaction";
 
     @Bean
     public ProducerFactory<String, Object> producerFactory(){

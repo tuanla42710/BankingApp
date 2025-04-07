@@ -20,6 +20,14 @@ public class Response<T> {
 
     private List<T> data;
 
+    public Response(int statusCode, Boolean error, int errorCode, String errorMessage, List<T> data) {
+        this.statusCode = statusCode;
+        this.error = error;
+        this.errorCode = errorCode;
+        this.errorMessage = errorMessage;
+        this.data = data;
+    }
+
     public int getStatusCode() {
         return statusCode;
     }

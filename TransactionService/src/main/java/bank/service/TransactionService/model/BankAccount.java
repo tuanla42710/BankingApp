@@ -22,4 +22,28 @@ public class BankAccount {
     private double balance;
 
     private String lastUpdate;
+
+    public String getAccountNumber() {
+        return accountNumber;
+    }
+
+    public String getCustomerId() {
+        return customerId;
+    }
+
+    public String getAccountType() {
+        return accountType;
+    }
+
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public String getLastUpdate() {
+        return lastUpdate;
+    }
 }

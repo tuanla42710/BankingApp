@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "bank_transaction")
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class Transaction {
     @Id
     @Column(name = "trans_id")
@@ -35,6 +36,9 @@ public class Transaction {
 
     @Column(name = "category")
     private String category;
+
+    @Column(name = "ofs_account")
+    private String ofsAccount;
 
     @Column(name = "last_update")
     private String lastUpdate;
@@ -65,6 +69,10 @@ public class Transaction {
 
     public String getCategory() {
         return category;
+    }
+
+    public String getOfsAccount() {
+        return ofsAccount;
     }
 
     public String getLastUpdate() {
