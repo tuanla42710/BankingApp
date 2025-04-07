@@ -3,6 +3,7 @@ package bank.service.TransactionService.service;
 import bank.service.TransactionService.APIConnection.HttpApiCall;
 import bank.service.TransactionService.Event.TransactionEvent;
 import bank.service.TransactionService.repository.TransactionRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.client.RestTemplate;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 
 @Service
 //@RequiredArgsConstructor
-@Transactional
+//@Transactional
 public class TransactionService {
 
 //    private final WebClient.Builder webClientBuilder;
@@ -40,11 +41,16 @@ public class TransactionService {
         String url = UriComponentsBuilder.fromHttpUrl(baseUrl)
                                          .queryParam("accountId",request.getTransactionData().getAccountId()).toUriString();
         HttpApiCall apiCall = new HttpApiCall(new RestTemplate());
-        Response<BankAccount> account =  apiCall.fetchResultFromGet(url, "admin", "admin");
+        Response<BankAccount> account =  apiCall.fetchResultFromGet(url, "admin", "admin", BankAccount.class);
         if (account.getData().isEmpty() ){
             return new Response<BankAccount>(200,true, 0 ,"Cid is not found",null);
         }
-        if (!account.getData().get(0).getAccountStatus().equals("active") ){
+        ObjectMapper mapper = new ObjectMapper();
+        BankAccount bankAccount = mapper.convertValue(
+                account.getData().get(0),
+                BankAccount.class
+        );
+        if (!bankAccount.getAccountStatus().equals("active") ){
             return new Response<BankAccount>(200,
                     true,
                     0 ,
@@ -53,7 +59,8 @@ public class TransactionService {
         }
         double transAmount = request.getTransactionData().getAmount();
 
-        if (transAmount < account.getData().get(0).getBalance()){
+
+        if (transAmount > bankAccount.getBalance()){
             return new Response<BankAccount>(
                     200,
                     true,
@@ -81,6 +88,8 @@ public class TransactionService {
                 request.getTransactionData().getCategory());
 
         kafkaTemplate.send("transaction",eventCredit);
+//
+//        System.out.println("hi");
 
         return new Response<BankAccount>(200,
                 false,

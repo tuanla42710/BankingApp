@@ -21,7 +21,7 @@ public class TransactionRepository {
         String sql = """
                 INSERT INTO bank_transaction (account_number, customer_id, amount, trx_context, ict, category, last_update)
                 VALUES
-                (?, ?, ?, ?, ?, ?)""";
+                (?, ?, ?, ?, ?, ?, ?)""";
         LocalDate date = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = date.format(formatter);

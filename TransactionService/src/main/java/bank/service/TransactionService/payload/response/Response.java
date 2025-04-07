@@ -3,12 +3,13 @@ package bank.service.TransactionService.payload.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @NoArgsConstructor
-@AllArgsConstructor
-//@Getter
+@Getter
+@Setter
 public class Response<T> {
     private int statusCode;
 

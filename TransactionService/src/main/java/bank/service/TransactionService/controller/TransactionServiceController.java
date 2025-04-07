@@ -29,7 +29,7 @@ public class TransactionServiceController {
                     404,
                     true,
                     0 ,
-                    null,
+                    e.getMessage(),
                     null);
 
         }

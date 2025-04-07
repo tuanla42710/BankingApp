@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Getter
 public class TransactionEvent {
 
@@ -38,6 +37,11 @@ public class TransactionEvent {
         this.ofsAccount = ofsAccount;
         this.category = category;
     }
+
+    public TransactionEvent() {
+
+    }
+
 
     public String getAccountId() {
         return accountId;
