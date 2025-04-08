@@ -1,11 +1,10 @@
 package bank.service.TransactionService.service;
 
 import bank.service.TransactionService.APIConnection.HttpApiCall;
-import bank.service.TransactionService.Event.TransactionEvent;
-import bank.service.TransactionService.Event.TransactionStatus;
 import bank.service.TransactionService.repository.TransactionRepository;
+import bank.service.event.TransactionEvent;
+import bank.service.event.TransactionStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.transaction.Transactional;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -14,9 +13,6 @@ import bank.service.TransactionService.payload.request.CreateTransactionRequest;
 import bank.service.TransactionService.payload.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.reactive.function.client.WebClient;
-
-import java.util.ArrayList;
 
 
 @Service
@@ -24,12 +20,6 @@ import java.util.ArrayList;
 //@Transactional
 public class TransactionService {
 
-//    private final WebClient.Builder webClientBuilder;
-//
-//    @Autowired  // @Autowired is optional in Spring 4.3+ for single constructor
-//    public TransactionService(WebClient.Builder webClientBuilder) {
-//        this.webClientBuilder = webClientBuilder;
-//    }
 
     @Autowired
     KafkaTemplate<String, Object> kafkaTemplate;
@@ -80,7 +70,7 @@ public class TransactionService {
                                                       request.getTransactionData().getCategory(),
                                                       TransactionStatus.PENDING);
 
-        kafkaTemplate.send("transaction",event);
+        kafkaTemplate.send("bankTransaction",event);
 
 
         return new Response<BankAccount>(200,

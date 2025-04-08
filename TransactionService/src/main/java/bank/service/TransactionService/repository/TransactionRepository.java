@@ -1,13 +1,12 @@
 package bank.service.TransactionService.repository;
 
 
-import bank.service.TransactionService.Event.TransactionEvent;
+
+import bank.service.event.TransactionEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Repository;
 
-import javax.swing.text.DateFormatter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 

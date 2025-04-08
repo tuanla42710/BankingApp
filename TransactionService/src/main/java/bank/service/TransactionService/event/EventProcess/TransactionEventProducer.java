@@ -1,4 +1,4 @@
-package bank.service.TransactionService.Event.EventProcess;
+package bank.service.TransactionService.event.EventProcess;
 
 
 import lombok.RequiredArgsConstructor;

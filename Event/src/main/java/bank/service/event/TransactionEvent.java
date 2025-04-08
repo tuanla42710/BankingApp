@@ -1,21 +1,16 @@
-package bank.service.bankaccount.event;
+package bank.service.event;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.core.serializer.Deserializer;
-
-import java.io.Serializable;
-
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
-public class TransactionEvent implements Serializable {
-
+public class TransactionEvent {
     @JsonProperty("accountId")
     private String accountId;
     @JsonProperty("customerId")

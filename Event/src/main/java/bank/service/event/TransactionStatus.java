@@ -1,4 +1,4 @@
-package bank.service.bankaccount.event;
+package bank.service.event;
 
 public enum TransactionStatus {
     PENDING,

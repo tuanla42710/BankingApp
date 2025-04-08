@@ -20,10 +20,10 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import java.util.HashMap;
 import java.util.Map;
 
-//@Configuration
+@Configuration
 public class KafkaConfig {
 
-    public static final String TOPIC = "transaction";
+    public static final String TOPIC = "bankTransaction";
 
     @Bean
     public ProducerFactory<String, Object> producerFactory(){
@@ -47,6 +47,7 @@ public class KafkaConfig {
         config.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         config.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, JsonDeserializer.class);
         config.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        config.put(JsonDeserializer.REMOVE_TYPE_INFO_HEADERS, "true");
         return new DefaultKafkaConsumerFactory<>(config);
     }
 

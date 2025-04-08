@@ -1,12 +1,14 @@
 package bank.service.bankaccount.service;
 
-import bank.service.bankaccount.event.TransactionEvent;
-import bank.service.bankaccount.event.TransactionStatus;
+
+
 import bank.service.bankaccount.model.BankAccount;
 import bank.service.bankaccount.model.User;
 import bank.service.bankaccount.payload.request.CreateAccountRequest;
 import bank.service.bankaccount.repository.BankAccountRepository;
 import bank.service.bankaccount.repository.UserRepository;
+import bank.service.event.TransactionEvent;
+import bank.service.event.TransactionStatus;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -18,7 +20,7 @@ import java.util.Optional;
 public class BankAccountService {
 
     @Autowired
-    KafkaTemplate<String, TransactionEvent> kafkaTemplate;
+    KafkaTemplate<String, Object> kafkaTemplate;
 
     @Autowired
     UserRepository userRepository;
@@ -51,7 +53,7 @@ public class BankAccountService {
         return bankAccountRepository.getAccountInfo(accountNumber);
     }
 
-    @Transactional
+
     public void processTransactionEvent(TransactionEvent event){
         System.out.println("hello");
         if (event.getTransactionStatus() == TransactionStatus.PENDING) {
@@ -62,7 +64,7 @@ public class BankAccountService {
                         event.getAmount(),
                         event.getIct(),
                         event.getOfsAccount());
-                TransactionEvent successEvent = new TransactionEvent(
+                TransactionEvent processEvent = new TransactionEvent(
                         event.getAccountId(),
                         event.getCustomerId(),
                         event.getAmount(),
@@ -72,7 +74,7 @@ public class BankAccountService {
                         event.getOfsCustomer(),
                         event.getCategory(),
                         TransactionStatus.PROCESSING);
-                kafkaTemplate.send("transaction", successEvent);
+                kafkaTemplate.send("bankTransaction", processEvent);
             } catch (Exception e) {
                 TransactionEvent failEvent = new TransactionEvent(
                         event.getAccountId(),
@@ -84,7 +86,7 @@ public class BankAccountService {
                         event.getOfsCustomer(),
                         event.getCategory(),
                         TransactionStatus.FAILED);
-                kafkaTemplate.send("transaction", failEvent);
+                kafkaTemplate.send("bankTransaction", failEvent);
             }
         }
 
