@@ -11,22 +11,24 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 public class TransactionEvent {
-    @JsonProperty("accountId")
+
+    private String hostRef;
+
     private String accountId;
-    @JsonProperty("customerId")
+
     private String customerId;
-    @JsonProperty("amount")
+
     private double amount;
-    @JsonProperty("content")
+
     private String content;
-    @JsonProperty("ict")
+
     private String ict;
-    @JsonProperty("ofsAccount")
+
     private String ofsAccount;
-    @JsonProperty("ofsCustomer")
+
     private String ofsCustomer;
-    @JsonProperty("category")
+
     private String category;
-    @JsonProperty("transactionStatus")
+
     private TransactionStatus transactionStatus;
 }

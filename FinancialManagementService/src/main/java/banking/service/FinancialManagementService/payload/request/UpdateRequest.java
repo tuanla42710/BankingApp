@@ -1,18 +1,18 @@
-package bank.service.TransactionService.payload.request;
+package banking.service.FinancialManagementService.payload.request;
 
-import bank.service.TransactionService.model.Transaction;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class CreateTransactionRequest {
+public class UpdateRequest<T> {
     private String requestId;
 
     private String sessionId;
 
-    private Transaction transactionData;
-
+    private List<T> data;
 }

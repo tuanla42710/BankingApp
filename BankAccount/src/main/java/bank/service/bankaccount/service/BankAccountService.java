@@ -65,6 +65,7 @@ public class BankAccountService {
                         event.getIct(),
                         event.getOfsAccount());
                 TransactionEvent processEvent = new TransactionEvent(
+                        event.getHostRef(),
                         event.getAccountId(),
                         event.getCustomerId(),
                         event.getAmount(),
@@ -77,6 +78,7 @@ public class BankAccountService {
                 kafkaTemplate.send("bankTransaction", processEvent);
             } catch (Exception e) {
                 TransactionEvent failEvent = new TransactionEvent(
+                        event.getHostRef(),
                         event.getAccountId(),
                         event.getCustomerId(),
                         event.getAmount(),

@@ -23,21 +23,8 @@ public class TransactionProcessConsumer {
 
     @KafkaListener(topics = "bankTransaction",groupId = "transaction_group")
     public void processTransaction(TransactionEvent event) throws JsonProcessingException {
-        if (event.getTransactionStatus() != TransactionStatus.COMPLETED){
+        if (event.getTransactionStatus() == TransactionStatus.PENDING){
             service.processTransactionEvent(event);
-
-            TransactionEvent successEvent = new TransactionEvent(
-                    event.getAccountId(),
-                    event.getCustomerId(),
-                    event.getAmount(),
-                    event.getContent(),
-                    event.getIct(),
-                    event.getOfsAccount(),
-                    event.getOfsCustomer(),
-                    event.getCategory(),
-                    TransactionStatus.COMPLETED
-            );
-            kafkaTemplate.send("bankTransaction", successEvent);
         }
 
     }

@@ -14,6 +14,8 @@ import bank.service.TransactionService.payload.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 
 @Service
 //@RequiredArgsConstructor
@@ -59,8 +61,11 @@ public class TransactionService {
                     "Balance is not enough to execute transaction",
                     null);
         }
+        UUID uuid = UUID.randomUUID();
+        String hostRef = uuid.toString();
 
-        TransactionEvent event = new TransactionEvent(request.getTransactionData().getAccountId(),
+        TransactionEvent event = new TransactionEvent(hostRef,
+                                                      request.getTransactionData().getAccountId(),
                                                       request.getTransactionData().getCustomerId(),
                                                       request.getTransactionData().getAmount(),
                                                       request.getTransactionData().getContent(),
@@ -82,5 +87,17 @@ public class TransactionService {
 
     public void handleTransactionProcess(TransactionEvent event){
         repository.saveTransaction(event);
+        TransactionEvent successEvent = new TransactionEvent(
+                event.getHostRef(),
+                event.getAccountId(),
+                event.getCustomerId(),
+                event.getAmount(),
+                event.getContent(),
+                event.getIct(),
+                event.getOfsAccount(),
+                event.getOfsCustomer(),
+                event.getCategory(),
+                TransactionStatus.COMPLETED);
+        kafkaTemplate.send("bankTransaction", successEvent);
     }
 }
