@@ -2,7 +2,10 @@ package banking.service.FinancialManagementService.service;
 
 import bank.service.event.TransactionEvent;
 import banking.service.FinancialManagementService.model.CategorizedTransaction;
+import banking.service.FinancialManagementService.model.StatisticOverview;
 import banking.service.FinancialManagementService.model.Transaction;
+import banking.service.FinancialManagementService.payload.request.OverviewRequest;
+import banking.service.FinancialManagementService.query.OverviewQuery;
 import banking.service.FinancialManagementService.repository.CategorizedTransactionRepository;
 import banking.service.FinancialManagementService.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,13 @@ public class CategoryService {
 
     public void deleteCategory(String hostRef, String accountId){
         repository.deleteCategorizedTransaction(hostRef,accountId);
+    }
+
+    public List<StatisticOverview> getStatisticOverview(OverviewRequest request){
+        OverviewQuery overviewQuery = new OverviewQuery(request);
+        String query = overviewQuery.buildQuery();
+
+        return repository.getStatisticOverview(query, request);
     }
 
 

@@ -4,16 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UpdateRequest<T> {
+public class OverviewRequest {
 
     private String requestId;
 
     private String sessionId;
 
-    private List<T> data;
+    private String customerId;
+
+    private String fromDate;
+
+    private String toDate;
+
+    private String period;
+
 }

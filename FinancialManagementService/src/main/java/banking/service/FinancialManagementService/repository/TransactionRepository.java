@@ -20,12 +20,12 @@ public class TransactionRepository {
                 FROM bank_transaction
                 WHERE hostref = ? and account_number = ?
                 """;
-        List<Transaction> transactions = jdbcTemplate.query(
+        return jdbcTemplate.query(
                 query,
                 new Object[]{hostRef, accountId},
                 new BeanPropertyRowMapper<>(Transaction.class)
         );
-        return transactions;
+
     }
 
 
