@@ -8,6 +8,7 @@ import banking.service.FinancialManagementService.payload.response.Response;
 import banking.service.FinancialManagementService.service.CategoryService;
 import ch.qos.logback.core.encoder.EchoEncoder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,6 +34,7 @@ public class FMController {
         return new Response<>();
     }
 
+    @Cacheable(value = "StatisticOverview",  keyGenerator = "overviewGenerator")
     @PostMapping("/getStatisticOverview")
     public Response<StatisticOverview> getStatisticOverview(@RequestBody OverviewRequest request){
         try {
