@@ -21,6 +21,12 @@ create table bank_user (
     primary key(user_id)
 );
 
+create table bank.users (
+    user_name varchar(20),
+    user_pass varchar(256),
+    primary key(user_name)
+);
+
 
 CREATE TABLE bank_transaction (
     trans_id INT auto_increment PRIMARY KEY,
