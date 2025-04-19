@@ -1,11 +1,24 @@
-# BankingApp
+A secure banking web application built with Spring Boot, featuring JWT authentication, Spring Security, and robust account management features.
 
-This project is created for learning purpose.
+🚀 Features
+✅ User registration & login
 
-Tech stack: kafka, docker, springboot, spring sercurity.
+🔐 Secure JWT-based authentication
 
-Application includes 3 service 
-- BankAccount provide information about account of client (balance, status)
-- TransactionService provide service for executing transaction
-- CategoriedService provide service for create, update category of transaction. This service also enable client to check amount of money they spend for each category. In addition, client can use it to manage their expense or income that does not relate to account in bank.
+💳 Manage bank accounts and transactions
+
+📜 RESTful API with clear endpoint structure
+
+📦 Modular structure following best practices
+
+🛠️ Tech Stack
+Backend: Spring Boot, Spring Security, Spring Data JPA, Kafka, Redis
+
+Authentication: JWT (JSON Web Tokens)
+
+Database: Mysql
+
+Build Tool: Maven
+
+Language: Java 17+
 
